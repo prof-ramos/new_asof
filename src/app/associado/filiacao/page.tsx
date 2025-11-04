@@ -227,6 +227,12 @@ const Filiacao = () => {
                       Formulário de Inscrição
                     </Link>
                   </Button>
+                  <Button variant="outline" asChild>
+                    <Link href="/documentos/termo-de-adesao.pdf" target="_blank">
+                      <Download size={16} className="mr-2" />
+                      Termo de Adesão
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </CardContent>

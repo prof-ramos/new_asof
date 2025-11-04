@@ -4,35 +4,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, FileText, Calendar, Mail, Download, Award, Globe, Book } from 'react-feather';
+import { comunicados } from '@/data/comunicados';
 
 const Imprensa = () => {
-  // Dados de exemplo para comunicados oficiais
-  const comunicadosOficiais = [
-    {
-      id: 1,
-      titulo: 'ASOF se posiciona sobre reformas no Serviço Exterior',
-      descricao: 'A Associação Nacional dos Oficiais de Chancelaria emitiu nota oficial sobre as propostas de reforma no Serviço Exterior Brasileiro.',
-      data: '15 out 2025',
-      tipo: 'Nota Oficial',
-      tags: ['Reforma', 'Serviço Exterior', 'Política']
-    },
-    {
-      id: 2,
-      titulo: 'Resultados do Prêmio ASOF de Excelência 2025',
-      descricao: 'A ASOF anuncia os vencedores do Prêmio ASOF de Excelência, que reconhece o trabalho de Oficiais de Chancelaria em diferentes áreas de atuação.',
-      data: '10 out 2025',
-      tipo: 'Comunicado',
-      tags: ['Prêmio', 'Excelência', 'Reconhecimento']
-    },
-    {
-      id: 3,
-      titulo: 'ASOF participa de fórum internacional em Genebra',
-      descricao: 'Representantes da ASOF participam do Fórum Internacional de Relações Exteriores, discutindo cooperação multilateral.',
-      data: '5 out 2025',
-      tipo: 'Notícia',
-      tags: ['Fórum', 'Internacional', 'Cooperação']
-    }
-  ];
+  const comunicadosOficiais = [...comunicados]
+    .sort((a, b) => (a.dataPublicacao < b.dataPublicacao ? 1 : -1))
+    .slice(0, 3);
 
   // Dados de exemplo para documentos oficiais
   const documentosOficiais = [
@@ -145,7 +122,9 @@ const Imprensa = () => {
                     <span className="inline-block px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
                       {comunicado.tipo}
                     </span>
-                    <span className="text-sm text-gray-500">{comunicado.data}</span>
+                    <span className="text-sm text-gray-500">
+                      {new Date(comunicado.dataPublicacao).toLocaleDateString('pt-BR')}
+                    </span>
                   </div>
                   <CardTitle className="text-lg">{comunicado.titulo}</CardTitle>
                 </CardHeader>
@@ -153,7 +132,7 @@ const Imprensa = () => {
                   <p className="text-gray-600 mb-4">{comunicado.descricao}</p>
                   <div className="flex justify-between items-center">
                     <Button variant="outline" size="sm" asChild>
-                      <Link href={`/imprensa/comunicados/${comunicado.id}`}>Ler mais</Link>
+                      <Link href={`/comunicados/${comunicado.slug}`}>Ler mais</Link>
                     </Button>
                     <div className="flex flex-wrap gap-2">
                       {comunicado.tags.slice(0, 2).map((tag, index) => (
@@ -173,7 +152,7 @@ const Imprensa = () => {
           
           <div className="text-center mt-12">
             <Button variant="outline" asChild>
-              <Link href="/imprensa/comunicados">Ver todos os comunicados</Link>
+              <Link href="/comunicados">Ver todos os comunicados</Link>
             </Button>
           </div>
         </div>

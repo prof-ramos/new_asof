@@ -96,7 +96,7 @@ src/
 
 **Header Navigation:**
 - Responsive header with dropdown menus for Institucional, Carreira, and Transparência
-- Authenticated users see saudação com botão "Sair"; visitantes veem botão "Acessar"
+Usuários autenticados veem saudação com botão "Sair"; visitantes veem botão "Acessar"
 - Mobile menu with hamburger toggle
 
 ## Environment Configuration

@@ -24,3 +24,30 @@ CREATE POLICY "public can read notes"
 ON public.notes
 FOR SELECT TO anon
 USING (true);
+
+-- Newsletter subscriptions
+CREATE TABLE newsletter_subscriptions (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email text NOT NULL,
+  segments text[] NOT NULL DEFAULT '{}',
+  consent_lgpd boolean NOT NULL DEFAULT false,
+  consent_timestamp timestamptz NOT NULL DEFAULT timezone('utc'::text, now()),
+  source text NOT NULL DEFAULT 'newsletter-page',
+  created_at timestamptz NOT NULL DEFAULT timezone('utc'::text, now()),
+  updated_at timestamptz NOT NULL DEFAULT timezone('utc'::text, now())
+);
+
+CREATE UNIQUE INDEX newsletter_subscriptions_email_idx
+ON newsletter_subscriptions (lower(email));
+
+ALTER TABLE newsletter_subscriptions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "public can insert newsletter"
+ON newsletter_subscriptions
+FOR INSERT TO anon
+WITH CHECK (true);
+
+CREATE POLICY "service role can select newsletter"
+ON newsletter_subscriptions
+FOR SELECT TO service_role
+USING (true);
