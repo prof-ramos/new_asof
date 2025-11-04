@@ -1,13 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
+import { useAuth } from '@/contexts/authContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, FileText, Users, Award, Calendar, Mail, Download, Eye } from 'react-feather';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const AreaAssociado = () => {
-  const { isSignedIn } = useUser();
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
   // Dados de exemplo para serviços exclusivos
   const servicosExclusivos = [
@@ -16,7 +19,7 @@ const AreaAssociado = () => {
       titulo: 'Área Restrita',
       descricao: 'Acesse documentos exclusivos para associados',
       icone: <Shield size={24} />,
-      href: isSignedIn ? '/associado/restrito' : '/auth/sign-in',
+      href: user ? '/associado/restrito' : '/auth/sign-in',
       cor: 'blue',
       tipo: 'acesso'
     },
@@ -25,7 +28,7 @@ const AreaAssociado = () => {
       titulo: 'Protocolos e Requerimentos',
       descricao: 'Sistema para protocolar documentos e requerimentos',
       icone: <FileText size={24} />,
-      href: isSignedIn ? '/associado/protocolos' : '/auth/sign-in',
+      href: user ? '/associado/protocolos' : '/auth/sign-in',
       cor: 'green',
       tipo: 'servico'
     },
@@ -34,7 +37,7 @@ const AreaAssociado = () => {
       titulo: 'Consulta Jurídica',
       descricao: 'Acesse nossa base de orientações jurídicas',
       icone: <Award size={24} />,
-      href: isSignedIn ? '/associado/juridico' : '/auth/sign-in',
+      href: user ? '/associado/juridico' : '/auth/sign-in',
       cor: 'purple',
       tipo: 'servico'
     },
@@ -43,7 +46,7 @@ const AreaAssociado = () => {
       titulo: 'Financeiro',
       descricao: 'Segunda via de boletos e histórico financeiro',
       icone: <Download size={24} />,
-      href: isSignedIn ? '/associado/financeiro' : '/auth/sign-in',
+      href: user ? '/associado/financeiro' : '/auth/sign-in',
       cor: 'yellow',
       tipo: 'servico'
     }
@@ -74,6 +77,20 @@ const AreaAssociado = () => {
     }
   ];
 
+  // Show loading state while checking auth
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen flex items-center justify-center bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-md mx-auto text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Verificando autenticação...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full py-8">
       {/* Seção de cabeçalho */}
@@ -96,7 +113,7 @@ const AreaAssociado = () => {
             </p>
           </div>
 
-          {!isSignedIn ? (
+          {!user ? (
             <Card className="mb-12 bg-blue-50 border-blue-200">
               <CardHeader>
                 <CardTitle className="text-xl text-center">Faça Login para Acessar a Área do Associado</CardTitle>
@@ -124,9 +141,9 @@ const AreaAssociado = () => {
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16" />
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold">Nome do Associado</h3>
-                    <p className="text-gray-600">Associado desde: 15 de março de 2023</p>
-                    <p className="text-gray-600">Status: Ativo</p>
+                    <h3 className="text-lg font-semibold">{user.fullName}</h3>
+                    <p className="text-gray-600">Email: {user.email}</p>
+                    <p className="text-gray-600">Status: {user.status}</p>
                   </div>
                   <div className="flex items-center">
                     <Button asChild>
@@ -159,7 +176,7 @@ const AreaAssociado = () => {
                 aria-label={`Acessar ${servico.titulo}`}
               >
                 <Card className={`h-full border border-gray-200 hover:border-blue-500 hover:shadow-lg transition-all group-hover:-translate-y-1 ${
-                  !isSignedIn && (servico.tipo === 'acesso' || servico.tipo === 'servico') ? 'opacity-70' : ''
+                  !user && (servico.tipo === 'acesso' || servico.tipo === 'servico') ? 'opacity-70' : ''
                 }`}>
                   <CardHeader className="flex items-center text-center">
                     <div className={`p-4 rounded-full bg-${servico.cor}-100 text-${servico.cor}-600 mb-4 group-hover:bg-${servico.cor}-200 transition-colors`}>

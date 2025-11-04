@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
+import { useAuth } from '@/contexts/authContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, FileText, Award, Shield, Download, Mail, CheckCircle, Clock, XCircle } from 'react-feather';
 
 const Filiacao = () => {
-  const { isSignedIn } = useUser();
+  const { user } = useAuth();
 
   // Dados de exemplo para requisitos de filiação
   const requisitosFiliacao = [
@@ -239,7 +239,7 @@ const Filiacao = () => {
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Status da Filiacao</h2>
           
-          {isSignedIn ? (
+          {user ? (
             <Card className="text-center p-8">
               <div className="flex justify-center mb-6">
                 <div className="p-4 rounded-full bg-blue-100 text-blue-600">

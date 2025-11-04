@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { ClerkProvider } from '@clerk/nextjs';
+import { AuthProvider } from '@/contexts/authContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -39,9 +39,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="pt-BR">
-        <body className={inter.className} suppressHydrationWarning={true}>
+    <html lang="pt-BR">
+      <body className={inter.className} suppressHydrationWarning={true}>
+        <AuthProvider>
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-grow pt-20">
@@ -49,8 +49,8 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
-        </body>
-      </html>
-    </ClerkProvider>
+        </AuthProvider>
+      </body>
+    </html>
   );
 }
