@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
-import { hashPassword, verifyPassword, generateToken, isValidEmail } from '@/lib/auth';
+import { verifyPassword, generateToken, isValidEmail } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
@@ -16,7 +16,18 @@ export async function POST(req: NextRequest) {
 
   try {
     // Check if user exists
-    const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email) as any;
+    interface User {
+      id: number;
+      email: string;
+      full_name: string;
+      role: string;
+      status: string;
+      password_hash: string;
+      created_at: string;
+      updated_at: string;
+    }
+
+    const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email) as User | undefined;
 
     if (!user || !verifyPassword(password, user.password_hash)) {
       return NextResponse.json({ message: 'Credenciais inválidas' }, { status: 401 });
@@ -39,16 +50,15 @@ export async function POST(req: NextRequest) {
     `).run(user.id, token, expiresAt.toISOString());
 
     // Return user info (excluding password)
-    const { password_hash, ...userWithoutPassword } = user;
     return NextResponse.json({
       user: {
-        id: userWithoutPassword.id,
-        email: userWithoutPassword.email,
-        fullName: userWithoutPassword.full_name,
-        role: userWithoutPassword.role,
-        status: userWithoutPassword.status,
-        createdAt: userWithoutPassword.created_at,
-        updatedAt: userWithoutPassword.updated_at
+        id: user.id,
+        email: user.email,
+        fullName: user.full_name,
+        role: user.role,
+        status: user.status,
+        createdAt: user.created_at,
+        updatedAt: user.updated_at
       },
       token
     });

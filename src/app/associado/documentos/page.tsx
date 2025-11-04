@@ -5,24 +5,26 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, Download, Search, Filter, Folder, Calendar, Shield, Eye } from 'react-feather';
 
 const Documentos = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const [documentos, setDocumentos] = useState<any[]>([]);
+  interface Documento {
+    id: number;
+    titulo: string;
+    descricao: string;
+    categoria: string;
+    dataPublicacao: Date;
+    tamanho: string;
+    tipo: string;
+    nivelAcesso: string;
+  }
+  const [documentos, setDocumentos] = useState<Documento[]>([]);
   const [loadingDocumentos, setLoadingDocumentos] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoriaFilter, setCategoriaFilter] = useState('todas');
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/auth/sign-in');
-    } else if (user) {
-      fetchDocumentos();
-    }
-  }, [user, loading, router]);
 
   const fetchDocumentos = async () => {
     if (!user) return;
@@ -100,6 +102,14 @@ const Documentos = () => {
       setLoadingDocumentos(false);
     }
   };
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/auth/sign-in');
+    } else if (user) {
+      fetchDocumentos();
+    }
+  }, [user, loading, router]);
 
   // Show loading state while checking auth
   if (loading) {

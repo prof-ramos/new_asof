@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useAuth } from '@/contexts/authContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, FileText, Award, Shield, Download, Mail, CheckCircle, Clock, XCircle } from 'react-feather';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Users, FileText, Award, Shield, Download, CheckCircle, XCircle } from 'react-feather';
 
 const Filiacao = () => {
   const { user } = useAuth();

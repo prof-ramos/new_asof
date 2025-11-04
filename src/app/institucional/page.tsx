@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Award, FileText, Calendar, Eye, Shield, BookOpen, Mail } from 'react-feather';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Users, Award, FileText, Calendar, Shield, Mail } from 'react-feather';
 
 const Institucional = () => {
   const institucionalItems = [

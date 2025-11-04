@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Plus, AlertCircle, CheckCircle, Mail, Users, Edit, Calendar } from 'react-feather';
+import { Plus, AlertCircle, CheckCircle, Mail, Edit, Calendar } from 'react-feather';
 
 const NovoProtocolo = () => {
   const { user, loading } = useAuth();
@@ -53,6 +53,7 @@ const NovoProtocolo = () => {
         prioridade: 'normal'
       });
     } catch (error) {
+      console.error("Failed to create protocol:", error);
       setMessage({ type: 'error', text: 'Erro ao criar protocolo. Tente novamente.' });
     } finally {
       setLoadingSubmit(false);

@@ -2,7 +2,6 @@ import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';
 import { hashPassword } from '@/lib/auth';
-import { User } from '@/types/user';
 
 // Initialize database
 const dbPath = process.env.NODE_ENV === 'production'
@@ -116,20 +115,26 @@ function initializeDatabase() {
       `).run('admin@asof.org.br', adminPasswordHash, 'Administrador ASOF', 'admin');
     }
   } catch (error) {
+    if (!error.message.includes('UNIQUE constraint failed')) {
+      console.error('Error initializing admin user:', error);
+    }
     // Ignore duplicate errors
   }
 
   // Create a test user if doesn't exist
   try {
-    const testUserExists = db.prepare('SELECT id FROM users WHERE email = ?').get('associado@asof.org.br');
-    if (!testUserExists) {
-      const testPasswordHash = hashPassword('associado123'); // Default password for development
+    const testUserExists = db.prepare('SELECT COUNT(*) FROM users WHERE email = ?').get('associado@asof.org.br') as { 'COUNT(*)': number };
+    if (testUserExists['COUNT(*)'] === 0) {
+      const testPasswordHash = hashPassword('associado123');
       db.prepare(`
         INSERT INTO users (email, password_hash, full_name, role)
         VALUES (?, ?, ?, ?)
       `).run('associado@asof.org.br', testPasswordHash, 'Associado Teste', 'associado');
     }
   } catch (error) {
+    if (!error.message.includes('UNIQUE constraint failed')) {
+      console.error('Error initializing test user:', error);
+    }
     // Ignore duplicate errors
   }
 }

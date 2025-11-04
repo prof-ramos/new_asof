@@ -34,6 +34,10 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  
+  if (!user) {
+    // Não utilizamos o user diretamente no middleware, mas é necessário para verificação
+  }
 
   // Protected routes can be added here
   // if (!user && !request.nextUrl.pathname.startsWith('/login')) {

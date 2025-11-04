@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import { Associado } from '@/types/associado';
-import { formatarCPF, formatarTelefone, calcularIdade } from '@/types/associado';
+import { formatarCPF, formatarTelefone } from '@/types/associado';
 
 export default async function AssociadosAdmin() {
   const supabase = await createClient();

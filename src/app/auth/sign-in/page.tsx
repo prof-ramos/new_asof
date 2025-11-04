@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/authContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { User, Shield, Mail, Lock, Eye, EyeOff, Key, Users, AlertCircle, CheckCircle } from 'react-feather';
+import { Shield, Mail, Lock, Eye, EyeOff, Users, AlertCircle, CheckCircle } from 'react-feather';
 
 const LoginContent = () => {
   const [formData, setFormData] = useState({
@@ -46,6 +46,7 @@ const LoginContent = () => {
         setError('Credenciais inválidas');
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError('Erro ao fazer login. Por favor, tente novamente.');
     } finally {
       setLoading(false);

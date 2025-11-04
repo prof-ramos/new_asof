@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useAuth } from '@/contexts/authContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, FileText, Users, Award, Calendar, Mail, Download, Eye, Briefcase, BookOpen, DollarSign } from 'react-feather';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Shield, FileText, Users, Award, Calendar, Download, DollarSign } from 'react-feather';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
