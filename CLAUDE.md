@@ -35,7 +35,7 @@ npm run ui:diff       # Check for component updates
 
 - **Frontend:** Next.js 14+ (App Router, SSR/SSG)
 - **UI Framework:** Tailwind CSS + Shadcn UI components
-- **Authentication:** Clerk (with multi-factor support)
+- **Authentication:** AuthProvider com sessões baseadas em token
 - **Icons:** React Feather, Lucide React, Feather Icons
 - **Database:** PostgreSQL (via Supabase)
 - **Hosting:** Vercel (Edge Network)
@@ -85,9 +85,9 @@ src/
 - Server and Client Components are explicitly separated (Client components use `'use client'` directive)
 
 **Authentication Flow:**
-- Clerk handles authentication with `ClerkProvider` wrapper in root layout
-- Redirects are configured in `next.config.js`: `/admin` → `/admin/login`, `/associado` → `/associado/login`
-- Member area requires authentication; public pages do not
+- `AuthProvider` (context client-side) gerencia sessões usando tokens emitidos pelos endpoints `/api/auth/*`
+- O layout raiz envolve toda a aplicação com `AuthProvider`, garantindo acesso ao estado de autenticação
+- Áreas restritas devem validar tokens ativos; páginas públicas permanecem acessíveis sem login
 
 **Component Organization:**
 - UI components from Shadcn are in `src/components/ui/`
@@ -96,7 +96,7 @@ src/
 
 **Header Navigation:**
 - Responsive header with dropdown menus for Institucional, Carreira, and Transparência
-- Authenticated users see UserButton; unauthenticated users see "Acessar" button
+- Authenticated users see saudação com botão "Sair"; visitantes veem botão "Acessar"
 - Mobile menu with hamburger toggle
 
 ## Environment Configuration
@@ -106,8 +106,8 @@ Copy `.env.example` to `.env.local` and configure:
 **Required for Development:**
 - `NEXT_PUBLIC_SITE_URL` - Site URL (default: http://localhost:3000)
 - `DATABASE_URL` - PostgreSQL connection string
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` / `CLERK_SECRET_KEY` - Clerk authentication
 - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase backend
+- Autenticação utiliza tokens internos — nenhuma variável adicional necessária no momento
 
 **Optional Integrations:**
 - Google Analytics, Sentry (monitoring)

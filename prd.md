@@ -159,7 +159,7 @@ O portal atual não atende requisitos contemporâneos de governança, acessibili
 |**UI**           |Tailwind + Shadcn    |Acessibilidade, padrões gov    |
 |**Backend**      |Strapi CMS / Supabase|Flexibilidade, API REST/GraphQL|
 |**Banco**        |PostgreSQL           |Confiabilidade, ACID           |
-|**Auth**         |Clerk / Auth.js      |Segurança, compliance          |
+|**Auth**         |Serviço próprio (AuthProvider)|Sessões controladas, flexibilidade |
 |**Hospedagem**   |Vercel               |Edge, DX, disponibilidade      |
 |**CDN/Security** |Cloudflare           |DDoS, cache, performance       |
 |**Monitoramento**|Sentry + Logtail     |Erros, logs, alertas           |

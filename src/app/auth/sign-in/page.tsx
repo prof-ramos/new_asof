@@ -1,14 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/authContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { User, Shield, Mail, Lock, Eye, EyeOff, Key, Users, AlertCircle, CheckCircle } from 'react-feather';
 
-const Login = () => {
+const LoginContent = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -197,5 +197,17 @@ const Login = () => {
     </div>
   );
 };
+
+const Login = () => (
+  <Suspense
+    fallback={
+      <div className="w-full min-h-screen flex items-center justify-center bg-gray-50 py-12">
+        <div className="text-gray-600">Carregando...</div>
+      </div>
+    }
+  >
+    <LoginContent />
+  </Suspense>
+);
 
 export default Login;

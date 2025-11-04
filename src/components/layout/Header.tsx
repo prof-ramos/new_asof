@@ -3,9 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { UserButton, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/authContext';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -19,7 +19,8 @@ import { Menu, X } from 'react-feather';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { isSignedIn } = useUser();
+  const { user, logout } = useAuth();
+  const isSignedIn = Boolean(user);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -121,7 +122,19 @@ const Header = () => {
               </Link>
             ))}
             {isSignedIn ? (
-              <UserButton />
+              <div className="flex items-center space-x-3">
+                <span className="text-sm text-gray-700">
+                  Olá, {user?.fullName || user?.email || 'Associado'}
+                </span>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    void logout();
+                  }}
+                >
+                  Sair
+                </Button>
+              </div>
             ) : (
               <Button asChild>
                 <Link href="/auth/sign-in">Acessar</Link>
@@ -132,9 +145,17 @@ const Header = () => {
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             {isSignedIn ? (
-              <div className="mr-2">
-                <UserButton />
-              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                className="mr-2"
+                onClick={() => {
+                  void logout();
+                  setIsMenuOpen(false);
+                }}
+              >
+                Sair
+              </Button>
             ) : (
               <Button size="sm" className="mr-2" asChild>
                 <Link href="/auth/sign-in">Acessar</Link>

@@ -41,7 +41,7 @@ Este projeto visa criar um portal institucional abrangente que modernize a prese
 - **Serviços:** Filiação online, Contato e ouvidoria, FAQ, Busca inteligente
 
 ### Área Restrita do Associado
-- Login seguro com autenticação multifator
+- Login seguro com autenticação baseada em tokens
 - Documentos exclusivos, protocolos e requerimentos
 - Consulta jurídica (base de orientações), reimpressão de boletos
 - Comprovantes e histórico financeiro, carteira digital do associado
@@ -63,7 +63,7 @@ Este projeto visa criar um portal institucional abrangente que modernize a prese
 - **UI:** Tailwind + Shadcn (Acessibilidade, padrões governamentais)
 - **Backend:** Strapi CMS / Supabase (Flexibilidade, API REST/GraphQL)
 - **Banco de dados:** PostgreSQL (Confiabilidade, ACID)
-- **Autenticação:** Clerk / Auth.js (Segurança, conformidade)
+- **Autenticação:** Serviço próprio baseado em tokens (AuthProvider)
 - **Hospedagem:** Vercel (Edge, Experiência de Desenvolvedor, disponibilidade)
 - **CDN/Segurança:** Cloudflare (Proteção DDoS, cache, performance)
 - **Monitoramento:** Sentry + Logtail (Erros, logs, alertas)

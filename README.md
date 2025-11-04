@@ -67,7 +67,7 @@ O **Portal Institucional ASOF** é uma plataforma digital moderna e abrangente d
 ### Backend & Dados
 - **[Supabase](https://supabase.com/)** - Backend as a Service
 - **[PostgreSQL](https://www.postgresql.org/)** - Banco de dados relacional
-- **[Clerk](https://clerk.com/)** - Autenticação e gerenciamento de usuários
+- **Autenticação própria baseada em tokens** - Gestão de sessões do portal
 
 ### DevOps & Qualidade
 - **[Vercel](https://vercel.com/)** - Hospedagem e deployment
@@ -117,10 +117,6 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 # Database
 DATABASE_URL="postgresql://user:password@localhost:5432/asof_portal"
-
-# Authentication (Clerk)
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
-CLERK_SECRET_KEY=your_clerk_secret
 
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
