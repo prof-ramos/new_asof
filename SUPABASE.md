@@ -111,6 +111,107 @@ O middleware em `src/utils/supabase/middleware.ts` atualiza automaticamente a se
 
 Para adicionar rotas protegidas, descomente e configure no arquivo `middleware.ts`.
 
+## Sistema de Associados
+
+### Estrutura do Banco de Dados
+
+O sistema possui uma tabela completa `associados` baseada na planilha de controle da ASOF. Para criar a estrutura:
+
+1. Acesse o [SQL Editor do Supabase](https://supabase.com/dashboard/project/xtjobupmjohbhnbttsfb/sql/new)
+2. Execute o arquivo `supabase-associados.sql`
+
+Este arquivo criará:
+- Tabela `associados` com 40+ campos
+- Índices otimizados para busca rápida
+- Views úteis (associados_ativos, estatisticas_associados, associados_por_lotacao)
+- Políticas de RLS (Row Level Security)
+- Funções auxiliares (buscar, calcular idade, etc.)
+- Triggers para atualização automática de timestamps
+- Dados de exemplo (3 associados)
+
+### Campos da Tabela Associados
+
+**Dados Pessoais:**
+- nome, sexo, email, naturalidade, uf_naturalidade
+- estado_civil, numero_dependentes, dependentes (JSON)
+
+**Documentação:**
+- data_nascimento, cpf, rg, uf_rg, orgao_expedidor, data_expedicao_rg
+
+**Endereço:**
+- endereco, cidade, uf_residencia, bairro, cep, pais
+
+**Contatos:**
+- telefone, celular, fax
+
+**Dados Funcionais:**
+- matricula_siape, ceoc, caoc, data_admissao, data_posse
+- origem, lotacao, data_lotacao, missao
+
+**Associação:**
+- associado, data_adesao, licenca, data_licenca, data_cancelamento
+
+**Profissionais:**
+- classe_padrao, convenios (JSON)
+
+### Tipos TypeScript
+
+O arquivo `src/types/associado.ts` contém:
+- Interface `Associado` completa
+- Tipos auxiliares (Sexo, EstadoCivil, Origem, etc.)
+- Funções de validação (CPF, email)
+- Funções de formatação (CPF, CEP, telefone)
+- Funções auxiliares (calcular idade, tempo de associação)
+
+### Página de Administração
+
+Acesse `/admin/associados` para visualizar:
+- Lista completa de associados
+- Estatísticas (total, ativos, inativos, lotações)
+- Tabela com informações principais
+- Status de cada associado
+
+### Exemplo de Uso
+
+```tsx
+import { createClient } from '@/utils/supabase/server';
+import { Associado } from '@/types/associado';
+
+// Buscar todos os associados ativos
+const { data: associados } = await supabase
+  .from('associados')
+  .select('*')
+  .eq('associado', true)
+  .is('data_cancelamento', null)
+  .order('nome');
+
+// Buscar por nome
+const { data } = await supabase
+  .from('associados')
+  .select('*')
+  .ilike('nome', '%Silva%');
+
+// Buscar estatísticas
+const { data: stats } = await supabase
+  .from('estatisticas_associados')
+  .select('*')
+  .single();
+```
+
+### Views Disponíveis
+
+1. **associados_ativos**: Apenas associados ativos com campos principais
+2. **estatisticas_associados**: Estatísticas gerais do sistema
+3. **associados_por_lotacao**: Distribuição por lotação
+
+### Importação de Dados
+
+Para importar dados de uma planilha Excel:
+
+1. Exporte a planilha para CSV
+2. Use a interface do Supabase (Table Editor > Import)
+3. Ou crie um script de migração SQL
+
 ## Recursos
 
 - [Documentação do Supabase](https://supabase.com/docs)
