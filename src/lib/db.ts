@@ -1,12 +1,19 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import fs from 'fs';
 import { hashPassword } from '@/lib/auth';
 import { User } from '@/types/user';
 
 // Initialize database
-const dbPath = process.env.NODE_ENV === 'production' 
-  ? path.resolve(process.cwd(), 'data/database.sqlite') 
+const dbPath = process.env.NODE_ENV === 'production'
+  ? path.resolve(process.cwd(), 'data/database.sqlite')
   : path.resolve(process.cwd(), 'data/database.dev.sqlite');
+
+// Create data directory if it doesn't exist
+const dataDir = path.dirname(dbPath);
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
 
 const db = new Database(dbPath);
 
@@ -99,26 +106,37 @@ function initializeDatabase() {
   `);
 
   // Create admin user if doesn't exist
-  const adminExists = db.prepare('SELECT id FROM users WHERE email = ?').get('admin@asof.org.br');
-  if (!adminExists) {
-    const adminPasswordHash = hashPassword('admin123'); // Default password for development
-    db.prepare(`
-      INSERT INTO users (email, password_hash, full_name, role) 
-      VALUES (?, ?, ?, ?)
-    `).run('admin@asof.org.br', adminPasswordHash, 'Administrador ASOF', 'admin');
+  try {
+    const adminExists = db.prepare('SELECT id FROM users WHERE email = ?').get('admin@asof.org.br');
+    if (!adminExists) {
+      const adminPasswordHash = hashPassword('admin123'); // Default password for development
+      db.prepare(`
+        INSERT INTO users (email, password_hash, full_name, role)
+        VALUES (?, ?, ?, ?)
+      `).run('admin@asof.org.br', adminPasswordHash, 'Administrador ASOF', 'admin');
+    }
+  } catch (error) {
+    // Ignore duplicate errors
   }
 
   // Create a test user if doesn't exist
-  const testUserExists = db.prepare('SELECT id FROM users WHERE email = ?').get('associado@asof.org.br');
-  if (!testUserExists) {
-    const testPasswordHash = hashPassword('associado123'); // Default password for development
-    db.prepare(`
-      INSERT INTO users (email, password_hash, full_name, role) 
-      VALUES (?, ?, ?, ?)
-    `).run('associado@asof.org.br', testPasswordHash, 'Associado Teste', 'associado');
+  try {
+    const testUserExists = db.prepare('SELECT id FROM users WHERE email = ?').get('associado@asof.org.br');
+    if (!testUserExists) {
+      const testPasswordHash = hashPassword('associado123'); // Default password for development
+      db.prepare(`
+        INSERT INTO users (email, password_hash, full_name, role)
+        VALUES (?, ?, ?, ?)
+      `).run('associado@asof.org.br', testPasswordHash, 'Associado Teste', 'associado');
+    }
+  } catch (error) {
+    // Ignore duplicate errors
   }
 }
 
-initializeDatabase();
+// Only initialize database if not in build mode
+if (process.env.NEXT_PHASE !== 'phase-production-build') {
+  initializeDatabase();
+}
 
 export default db;

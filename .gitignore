@@ -19,6 +19,12 @@ build/
 # Production
 dist/
 
+# Database
+data/
+*.sqlite
+*.sqlite-journal
+*.db
+
 # Debug
 debug.log
 *.log

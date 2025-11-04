@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Plus, AlertCircle, CheckCircle, Mail, Users, FileSignature, Calendar } from 'react-feather';
+import { FileText, Plus, AlertCircle, CheckCircle, Mail, Users, Edit, Calendar } from 'react-feather';
 
 const NovoProtocolo = () => {
   const { user, loading } = useAuth();
@@ -233,7 +233,7 @@ const NovoProtocolo = () => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="flex flex-col items-center text-center">
-                    <FileSignature size={40} className="text-blue-600 mb-3" />
+                    <Edit size={40} className="text-blue-600 mb-3" />
                     <h3 className="font-semibold mb-1">Autenticação</h3>
                     <p className="text-sm text-gray-600">Todos os protocolos são autenticados com sua identidade de associado</p>
                   </div>

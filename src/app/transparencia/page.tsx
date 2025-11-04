@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Eye, FileText, Users, Award, Calendar, Shield, Download, BarChart3, Coins } from 'react-feather';
+import { Eye, FileText, Users, Award, Calendar, Shield, Download, BarChart2, DollarSign } from 'react-feather';
 
 const Transparencia = () => {
   // Dados de exemplo para relatórios de transparência
@@ -197,7 +197,7 @@ const Transparencia = () => {
                 <CardHeader className="flex flex-row items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <div className="p-3 rounded-full bg-green-100 text-green-600">
-                      <Coins size={24} />
+                      <DollarSign size={24} />
                     </div>
                     <div>
                       <CardTitle>{demonstrativo.titulo}</CardTitle>
@@ -267,7 +267,7 @@ const Transparencia = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <Card className="text-center p-6">
-              <BarChart3 size={32} className="text-blue-600 mx-auto mb-4" />
+              <BarChart2 size={32} className="text-blue-600 mx-auto mb-4" />
               <CardTitle className="text-2xl">98%</CardTitle>
               <p className="text-gray-600">Documentos Disponíveis</p>
             </Card>
