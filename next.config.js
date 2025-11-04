@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
   images: {
     domains: ['localhost', 'asof.org.br', 'www.asof.org.br', 'cdn.example.com'],
     formats: ['image/webp', 'image/avif'],

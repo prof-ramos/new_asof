@@ -1,9 +1,11 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { UserButton, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   NavigationMenu,
   NavigationMenuContent,

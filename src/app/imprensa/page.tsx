@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, FileText, Calendar, Mail, Download, Award, Globe, Newspaper } from 'react-feather';
+import { Users, FileText, Calendar, Mail, Download, Award, Globe, Book } from 'react-feather';
 
 const Imprensa = () => {
   // Dados de exemplo para comunicados oficiais

@@ -1,32 +1,28 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
 import { hashPassword, isValidEmail } from '@/lib/auth';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Método não permitido' });
-  }
-
-  const { email, password, fullName } = req.body;
+export async function POST(req: NextRequest) {
+  const { email, password, fullName } = await req.json();
 
   // Validate input
   if (!email || !password || !fullName) {
-    return res.status(400).json({ message: 'Email, senha e nome completo são obrigatórios' });
+    return NextResponse.json({ message: 'Email, senha e nome completo são obrigatórios' }, { status: 400 });
   }
 
   if (!isValidEmail(email)) {
-    return res.status(400).json({ message: 'Email inválido' });
+    return NextResponse.json({ message: 'Email inválido' }, { status: 400 });
   }
 
   if (password.length < 6) {
-    return res.status(400).json({ message: 'A senha deve ter pelo menos 6 caracteres' });
+    return NextResponse.json({ message: 'A senha deve ter pelo menos 6 caracteres' }, { status: 400 });
   }
 
   try {
     // Check if user already exists
     const existingUser = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
     if (existingUser) {
-      return res.status(409).json({ message: 'Usuário já existe' });
+      return NextResponse.json({ message: 'Usuário já existe' }, { status: 409 });
     }
 
     // Hash the password
@@ -34,19 +30,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Create the user
     const result = db.prepare(`
-      INSERT INTO users (email, password_hash, full_name, role, status) 
+      INSERT INTO users (email, password_hash, full_name, role, status)
       VALUES (?, ?, ?, 'associado', 'ativo')
     `).run(email, passwordHash, fullName);
 
     // Create associated associado record
     db.prepare(`
-      INSERT INTO associados (user_id) 
+      INSERT INTO associados (user_id)
       VALUES (?)
     `).run(result.lastInsertRowid);
 
-    res.status(201).json({ message: 'Usuário criado com sucesso' });
+    return NextResponse.json({ message: 'Usuário criado com sucesso' }, { status: 201 });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).json({ message: 'Erro interno do servidor' });
+    return NextResponse.json({ message: 'Erro interno do servidor' }, { status: 500 });
   }
 }
