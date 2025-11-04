@@ -1,0 +1,56 @@
+import './globals.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import { ClerkProvider } from '@clerk/nextjs';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: 'ASOF - Associação Nacional dos Oficiais de Chancelaria',
+  description: 'Portal Institucional da Associação Nacional dos Oficiais de Chancelaria do Serviço Exterior Brasileiro',
+  keywords: 'ASOF, Oficiais de Chancelaria, Serviço Exterior, Associação, Diplomacia, Brasil',
+  authors: [{ name: 'ASOF - Associação Nacional dos Oficiais de Chancelaria' }],
+  creator: 'ASOF',
+  publisher: 'ASOF',
+  formatDetection: { email: false, address: false, telephone: false },
+  openGraph: {
+    title: 'ASOF - Associação Nacional dos Oficiais de Chancelaria',
+    description: 'Portal Institucional da Associação Nacional dos Oficiais de Chancelaria do Serviço Exterior Brasileiro',
+    type: 'website',
+    locale: 'pt_BR',
+    url: 'https://www.asof.org.br',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ASOF - Associação Nacional dos Oficiais de Chancelaria',
+    description: 'Portal Institucional da Associação Nacional dos Oficiais de Chancelaria do Serviço Exterior Brasileiro',
+  },
+  metadataBase: new URL('https://www.asof.org.br'),
+  alternates: {
+    canonical: '/',
+  },
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <ClerkProvider>
+      <html lang="pt-BR">
+        <body className={inter.className} suppressHydrationWarning={true}>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-grow pt-20">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
+  );
+}
