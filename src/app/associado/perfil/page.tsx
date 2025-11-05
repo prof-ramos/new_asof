@@ -5,13 +5,30 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { User, Mail, Calendar, Briefcase, Shield, MapPin, Phone, Globe, Edit3, Save, X, Check, AlertCircle } from 'react-feather';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { User, Shield, Globe, Edit3, Save, X, Check, AlertCircle } from 'react-feather';
+
+interface UserProfile {
+  id: string;
+  email: string;
+  fullName: string;
+  role: string;
+  status: string;
+  cargo?: string;
+  postoGraduacao?: string;
+  dataIngresso?: string;
+  areaAtuacao?: string;
+  contatoEmergencia?: string;
+  telefone?: string;
+  endereco?: string;
+  created_at: string;
+  updated_at: string;
+}
 
 const Perfil = () => {
   const { user: currentUser, loading, logout } = useAuth();
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -85,6 +102,7 @@ const Perfil = () => {
       // Clear message after 3 seconds
       setTimeout(() => setMessage(null), 3000);
     } catch (error) {
+      console.error("Failed to update profile:", error);
       setMessage({ type: 'error', text: 'Erro ao atualizar perfil. Tente novamente.' });
     }
   };

@@ -5,24 +5,25 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Award, Search, Filter, BookOpen, Users, Calendar, MessageSquare, FileText } from 'react-feather';
 
 const Juridico = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const [consultas, setConsultas] = useState<any[]>([]);
+  interface ConsultaJuridica {
+    id: number;
+    titulo: string;
+    conteudo: string;
+    categoria: string;
+    status: string;
+    createdAt: Date;
+    autor: string;
+  }
+  const [consultas, setConsultas] = useState<ConsultaJuridica[]>([]);
   const [loadingConsultas, setLoadingConsultas] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoriaFilter, setCategoriaFilter] = useState('todas');
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/auth/sign-in');
-    } else if (user) {
-      fetchConsultas();
-    }
-  }, [user, loading, router]);
 
   const fetchConsultas = async () => {
     if (!user) return;
@@ -76,6 +77,14 @@ const Juridico = () => {
       setLoadingConsultas(false);
     }
   };
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/auth/sign-in');
+    } else if (user) {
+      fetchConsultas();
+    }
+  }, [user, loading, router]);
 
   // Show loading state while checking auth
   if (loading) {

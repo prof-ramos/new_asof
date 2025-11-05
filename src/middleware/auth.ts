@@ -1,6 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
 
+interface SessionResult {
+  id: number;
+  user_id: number;
+  token: string;
+  expires_at: string;
+  email: string;
+  full_name: string;
+  role: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export function verifyAuth(token: string) {
   try {
     // Check if session exists and is not expired
@@ -9,7 +22,7 @@ export function verifyAuth(token: string) {
       FROM sessions s 
       JOIN users u ON s.user_id = u.id 
       WHERE s.token = ? AND s.expires_at > CURRENT_TIMESTAMP
-    `).get(token) as any;
+    `).get(token) as SessionResult | undefined;
 
     if (!session) {
       return null;

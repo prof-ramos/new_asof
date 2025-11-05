@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Mail, Phone, MapPin, Calendar, Award, Shield } from 'react-feather';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Users, Mail, Phone, MapPin, Shield } from 'react-feather';
 
 const Diretoria = () => {
   // Dados de exemplo para membros da diretoria

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, Globe, Shield, Users, FileText, Calendar, Info, Linkedin } from 'react-feather';
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, Globe, Shield, Users, Linkedin } from 'react-feather';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();

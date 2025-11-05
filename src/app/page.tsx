@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Calendar, FileText, Users, Mail, Shield, Eye, BookOpen, Award } from 'react-feather';
@@ -117,40 +116,53 @@ const Home = () => {
   return (
     <div className="w-full">
       {/* Seção Hero */}
-      <section className="relative bg-gradient-to-r from-blue-800 to-blue-600 text-white py-20">
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[hsl(var(--primary))] via-[#0C7489] to-[hsl(var(--accent))] py-20 text-white">
+        <div aria-hidden="true" className="absolute -right-32 top-16 h-72 w-72 rounded-full bg-white/15 blur-3xl" />
+        <div aria-hidden="true" className="absolute -bottom-24 left-16 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+        <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Associação Nacional dos Oficiais de Chancelaria</h1>
-            <p className="text-xl mb-8 text-blue-100">Fortalecendo a representação da carreira de Oficial de Chancelaria e promovendo o diálogo institucional.</p>
+            <p className="text-xl mb-8 text-white/80">Fortalecendo a representação da carreira de Oficial de Chancelaria e promovendo o diálogo institucional.</p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-white text-blue-800 hover:bg-blue-50">
+              <Button asChild size="lg" className="bg-white text-[hsl(var(--primary))] hover:bg-white/90">
                 <Link href="/associado/filiacao">Tornar-se Associado</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-white/70 text-white hover:bg-white/10 focus-visible:ring-offset-0"
+              >
                 <Link href="/institucional">Conheça a ASOF</Link>
               </Button>
             </div>
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-0"></div>
       </section>
 
       {/* Seção Destaques Institucionais */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-[hsl(var(--muted))]">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Nossos Destaques</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <h2 className="mb-12 text-center text-3xl font-semibold text-foreground">Nossos Destaques</h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {destaques.map((destaque) => (
-              <Card key={destaque.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader className="flex items-center text-center">
-                  <div className="p-3 rounded-full bg-blue-100 text-blue-600 mb-4">
+              <Card
+                key={destaque.id}
+                className="border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-lg"
+              >
+                <CardHeader className="flex flex-col items-center gap-4 text-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] text-[hsl(var(--primary-foreground))]">
                     {destaque.icone}
                   </div>
-                  <CardTitle className="text-xl">{destaque.titulo}</CardTitle>
+                  <CardTitle className="text-xl text-foreground">{destaque.titulo}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="mb-4">{destaque.descricao}</CardDescription>
-                  <Button asChild variant="outline">
+                  <CardDescription className="mb-6 text-muted-foreground">{destaque.descricao}</CardDescription>
+                  <Button
+                    asChild
+                    className="bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))] hover:brightness-110"
+                  >
                     <Link href={destaque.href}>Saiba Mais</Link>
                   </Button>
                 </CardContent>
@@ -163,28 +175,28 @@ const Home = () => {
       {/* Seção Notícias */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800">Últimas Notícias</h2>
-            <Button variant="outline" asChild>
+          <div className="mb-12 flex items-center justify-between">
+            <h2 className="text-3xl font-semibold text-foreground">Últimas Notícias</h2>
+            <Button asChild variant="outline" className="border-border text-foreground hover:bg-[hsl(var(--muted))]">
               <Link href="/noticias">Ver todas</Link>
             </Button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {noticias.map((noticia) => (
-              <Card key={noticia.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+              <Card key={noticia.id} className="overflow-hidden border border-border transition-all hover:-translate-y-1 hover:shadow-lg">
                 <CardHeader>
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="inline-block px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
+                  <div className="mb-3 flex items-start justify-between">
+                    <span className="inline-block rounded-full bg-secondary/20 px-3 py-1 text-sm font-medium text-secondary-foreground">
                       {noticia.categoria}
                     </span>
-                    <span className="text-sm text-gray-500">{noticia.data}</span>
+                    <span className="text-sm text-muted-foreground">{noticia.data}</span>
                   </div>
-                  <CardTitle className="text-xl">{noticia.titulo}</CardTitle>
+                  <CardTitle className="text-xl text-foreground">{noticia.titulo}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 mb-4">{noticia.descricao}</p>
-                  <Button variant="link" className="p-0 h-auto" asChild>
+                  <p className="mb-4 text-muted-foreground">{noticia.descricao}</p>
+                  <Button variant="link" className="h-auto p-0 text-[hsl(var(--primary))]" asChild>
                     <Link href={`/noticias/${noticia.id}`}>Ler mais</Link>
                   </Button>
                 </CardContent>
@@ -195,28 +207,28 @@ const Home = () => {
       </section>
 
       {/* Seção Serviços ao Associado */}
-      <section className="py-16 bg-gray-50">
+      <section className="bg-gradient-to-br from-white via-[hsl(var(--muted))] to-white py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">Serviços para Associados</h2>
-          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Acesse benefícios exclusivos e serviços especializados disponíveis para membros da ASOF</p>
+          <h2 className="mb-4 text-center text-3xl font-semibold text-foreground">Serviços para Associados</h2>
+          <p className="mx-auto mb-12 max-w-2xl text-center text-muted-foreground">Acesse benefícios exclusivos e serviços especializados disponíveis para membros da ASOF</p>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {servicos.map((servico) => (
               <Link 
                 key={servico.id} 
                 href={servico.href} 
-                className="block group"
+                className="group block"
                 aria-label={`Acessar serviço: ${servico.titulo}`}
               >
-                <Card className="h-full border border-gray-200 hover:border-blue-500 hover:shadow-md transition-all group-hover:-translate-y-1">
-                  <CardHeader className="flex items-center text-center">
-                    <div className="p-3 rounded-full bg-blue-100 text-blue-600 mb-4 group-hover:bg-blue-200 transition-colors">
+                <Card className="h-full border border-border transition-all group-hover:-translate-y-1 group-hover:border-[hsl(var(--accent))] group-hover:shadow-lg">
+                  <CardHeader className="flex flex-col items-center gap-4 text-center">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] text-[hsl(var(--primary-foreground))] transition-transform group-hover:scale-105">
                       {servico.icone}
                     </div>
-                    <CardTitle className="text-lg">{servico.titulo}</CardTitle>
+                    <CardTitle className="text-lg text-foreground">{servico.titulo}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 text-center">{servico.descricao}</p>
+                    <p className="text-center text-muted-foreground">{servico.descricao}</p>
                   </CardContent>
                 </Card>
               </Link>
@@ -228,19 +240,19 @@ const Home = () => {
       {/* Seção Contato e Newsletter */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-blue-700 to-blue-500 rounded-xl p-8 text-center text-white">
-            <Mail size={48} className="mx-auto mb-6 text-blue-200" />
-            <h2 className="text-3xl font-bold mb-4">Fique por dentro</h2>
-            <p className="text-xl mb-8 text-blue-100">Assine nossa newsletter e receba as últimas notícias e informações sobre a carreira</p>
+          <div className="mx-auto max-w-4xl rounded-xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] p-8 text-center text-white shadow-lg">
+            <Mail size={48} className="mx-auto mb-6 text-white/80" aria-hidden="true" />
+            <h2 className="mb-4 text-3xl font-semibold">Fique por dentro</h2>
+            <p className="mb-8 text-xl text-white/80">Assine nossa newsletter e receba as últimas notícias e informações sobre a carreira</p>
             
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <div className="mx-auto flex max-w-md flex-col gap-4 sm:flex-row">
               <input 
                 type="email" 
                 placeholder="Seu melhor e-mail" 
-                className="flex-grow px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full flex-grow rounded-lg border border-transparent bg-white px-4 py-3 text-[hsl(var(--foreground))] shadow-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--secondary))] focus:ring-offset-2 focus:ring-offset-transparent"
                 aria-label="Endereço de e-mail"
               />
-              <Button type="button" className="bg-white text-blue-700 hover:bg-blue-50 px-6">
+              <Button type="button" className="bg-white px-6 text-[hsl(var(--primary))] hover:bg-white/90">
                 Inscrever-se
               </Button>
             </div>

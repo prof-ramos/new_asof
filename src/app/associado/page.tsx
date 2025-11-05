@@ -3,9 +3,8 @@
 import Link from 'next/link';
 import { useAuth } from '@/contexts/authContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, FileText, Users, Award, Calendar, Mail, Download, Eye } from 'react-feather';
-import { useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Shield, FileText, Users, Award, Calendar, Download, Eye } from 'react-feather';
 import { useRouter } from 'next/navigation';
 
 const AreaAssociado = () => {

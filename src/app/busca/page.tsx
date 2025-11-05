@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Search, FileText, Users, Globe, Award, Calendar, Tag, Filter, Sliders, TrendingUp } from 'react-feather';
 
 const BuscaInteligente = () => {

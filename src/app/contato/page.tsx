@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, MapPin, Users, FileText, MessageSquare, Shield, Calendar } from 'react-feather';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Mail, Phone, MapPin, Users, MessageSquare, Shield, Calendar } from 'react-feather';
 
 const Contato = () => {
   // Dados de exemplo para contatos institucionais

@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, FileText, Calendar, Mail, Download, Award, Globe, Book } from 'react-feather';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Users, FileText, Calendar, Mail, Download, Award, Globe } from 'react-feather';
 import { comunicados } from '@/data/comunicados';
 
 const Imprensa = () => {

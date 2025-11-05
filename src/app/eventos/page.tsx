@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calendar, MapPin, Clock, Users, Award, FileText, Download, Eye } from 'react-feather';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Calendar, MapPin, Clock, Users, Award, Download } from 'react-feather';
 
 const Eventos = () => {
   // Dados de exemplo para próximos eventos

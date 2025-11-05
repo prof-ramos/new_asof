@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Download, BookOpen, Users, Award, Eye } from 'react-feather';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileText, Download, BookOpen, Users, Award } from 'react-feather';
 
 const Estatuto = () => {
   // Dados de exemplo para seções do estatuto

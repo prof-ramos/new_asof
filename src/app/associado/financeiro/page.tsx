@@ -5,24 +5,25 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Download, Calendar, DollarSign, Eye, Filter, Search, CreditCard, FileText } from 'react-feather';
 
 const Financeiro = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const [financeiros, setFinanceiros] = useState<any[]>([]);
+  interface Financeiro {
+    id: number;
+    descricao: string;
+    valor: number;
+    dataVencimento: Date;
+    dataPagamento: Date | null;
+    status: string;
+    createdAt: Date;
+  }
+  const [financeiros, setFinanceiros] = useState<Financeiro[]>([]);
   const [loadingFinanceiros, setLoadingFinanceiros] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('todos');
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/auth/sign-in');
-    } else if (user) {
-      fetchFinanceiros();
-    }
-  }, [user, loading, router]);
 
   const fetchFinanceiros = async () => {
     if (!user) return;
@@ -76,6 +77,14 @@ const Financeiro = () => {
       setLoadingFinanceiros(false);
     }
   };
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/auth/sign-in');
+    } else if (user) {
+      fetchFinanceiros();
+    }
+  }, [user, loading, router]);
 
   // Show loading state while checking auth
   if (loading) {

@@ -5,25 +5,25 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, Plus, Search, Filter, Download, Eye, Shield, Clock, CheckCircle, XCircle } from 'react-feather';
-import db from '@/lib/db';
 
 const Protocolos = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const [protocolos, setProtocolos] = useState<any[]>([]);
+  interface Protocolo {
+    id: number;
+    numeroProtocolo: string;
+    tipoDocumento: string;
+    assunto: string;
+    descricao: string;
+    status: string;
+    createdAt: Date;
+  }
+  const [protocolos, setProtocolos] = useState<Protocolo[]>([]);
   const [loadingProtocolos, setLoadingProtocolos] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('todos');
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/auth/sign-in');
-    } else if (user) {
-      fetchProtocolos();
-    }
-  }, [user, loading, router]);
 
   const fetchProtocolos = async () => {
     if (!user) return;
@@ -68,6 +68,14 @@ const Protocolos = () => {
       setLoadingProtocolos(false);
     }
   };
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/auth/sign-in');
+    } else if (user) {
+      fetchProtocolos();
+    }
+  }, [user, loading, router]);
 
   // Show loading state while checking auth
   if (loading) {

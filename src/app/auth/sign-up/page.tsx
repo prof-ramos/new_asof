@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/authContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { User, Shield, Mail, Lock, Eye, EyeOff, Key, Users, AlertCircle } from 'react-feather';
+import { User, Shield, Mail, Lock, Eye, EyeOff, AlertCircle } from 'react-feather';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -61,6 +61,7 @@ const SignUp = () => {
         setError('Erro ao criar conta. O email pode já estar em uso.');
       }
     } catch (err) {
+      console.error("Signup error:", err);
       setError('Erro ao criar conta. Por favor, tente novamente.');
     } finally {
       setLoading(false);

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Calendar, Tag, FileText } from 'react-feather';
+import { Calendar, FileText } from 'react-feather';
 import { Metadata } from 'next';
 
 import { comunicados } from '@/data/comunicados';
